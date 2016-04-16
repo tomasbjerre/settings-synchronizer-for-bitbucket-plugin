@@ -1,0 +1,60 @@
+<atlassian-plugin key="${project.groupId}.${project.artifactId}" name="${project.name}" plugins-version="2">
+ <plugin-info>
+  <description>${project.description}</description>
+  <version>${project.version}</version>
+  <vendor name="${project.organization.name}" url="${project.organization.url}" />
+  <param name="atlassian-data-center-compatible">true</param>
+  <param name="plugin-icon">images/pluginIcon.png</param>
+  <param name="plugin-logo">images/pluginLogo.png</param>
+  <param name="configure.url">/plugins/servlet/ssfb/globaladminview</param>
+ </plugin-info>
+
+ <rest key="rest" path="/ssfb" version="1.0">
+  <description>Provides resources for the SSFB.</description>
+ </rest>
+
+ <component-import key="applicationProperties" interface="com.atlassian.sal.api.ApplicationProperties" />
+ <component-import key="userManager" interface="com.atlassian.sal.api.user.UserManager" />
+ <component-import key="loginUriProvider" interface="com.atlassian.sal.api.auth.LoginUriProvider" />
+ <component-import key="renderer" interface="com.atlassian.templaterenderer.TemplateRenderer" />
+ <component-import key="pluginSettingsFactory" interface="com.atlassian.sal.api.pluginsettings.PluginSettingsFactory" />
+ <component-import key="transactionTemplate" interface="com.atlassian.sal.api.transaction.TransactionTemplate" />
+ <component-import key="executorService" interface="java.util.concurrent.ExecutorService" />
+
+ <component key="scheduleService" class="se.bjurr.ssfb.service.ScheduleService" />
+ <component key="settingsService" class="se.bjurr.ssfb.service.SettingsService" />
+ <component key="syncService" class="se.bjurr.ssfb.service.SyncService" />
+
+ <!-- Global admin -->
+
+ <servlet key="globaladminview" class="se.bjurr.ssfb.presentation.GlobalAdminViewServlet">
+  <url-pattern>/ssfb/globaladminview</url-pattern>
+ </servlet>
+
+ <web-resource name="Global Admin Web Resources" key="globaladmin">
+  <dependency>com.atlassian.auiplugin:ajs</dependency>
+  <resource type="download" name="templates/common.js" location="templates/common.js" />
+  <resource type="download" name="templates/global_admin.js" location="templates/global_admin.js" />
+  <resource type="download" name="templates/global_admin.css" location="templates/global_admin.css" />
+ </web-resource>
+
+ <!-- Repo admin -->
+
+ <servlet key="repoadminview" class="se.bjurr.ssfb.presentation.RepoAdminViewServlet">
+  <url-pattern>/ssfb/repoadminview/*</url-pattern>
+ </servlet>
+
+ <web-item key="se.bjurr.ssfb.repo.synchronization" name="synchronization" section="bitbucket.repository.settings.panel/repository-settings-addons-section">
+  <label key="se.bjurr.ssfb.repo.synchronization">Synchronization</label>
+  <link>/plugins/servlet/ssfb/repoadminview/${repository.project.key}/${repository.slug}
+  </link>
+ </web-item>
+
+ <web-resource name="Repo Admin Web Resources" key="repoadmin">
+  <dependency>com.atlassian.auiplugin:ajs</dependency>
+  <resource type="download" name="templates/common.js" location="templates/common.js" />
+  <resource type="download" name="templates/repo_admin.js" location="templates/repo_admin.js" />
+  <resource type="download" name="templates/repo_admin.css" location="templates/repo_admin.css" />
+ </web-resource>
+
+</atlassian-plugin>
