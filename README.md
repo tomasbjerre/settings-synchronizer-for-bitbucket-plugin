@@ -2,6 +2,9 @@
 
 Synchronize repository settings in Atlassian Bitbucket Server.
 
+Available in [Atlassian Marketplace](https://marketplace.atlassian.com/plugins/se.bjurr.prnfs.ettings-synchronizer-for-bitbucket).
+
+
 Settings can be made on repository level.
 
 ![Repo Settings](https://raw.githubusercontent.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/master/sandbox/repoadmin.png)
