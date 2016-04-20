@@ -59,15 +59,15 @@ public class SyncService {
   for (String fromConfigurationKey : fromHooks.keySet()) {
    RepositoryHook fromHook = fromHooks.get(fromConfigurationKey);
 
+   if (fromHook.isConfigured()) {
+    Settings fromSettings = repositoryHookService.getSettings(fromRepository, fromConfigurationKey);
+    repositoryHookService.setSettings(toRepository, fromConfigurationKey, fromSettings);
+   }
+
    if (fromHook.isEnabled()) {
     repositoryHookService.enable(toRepository, fromConfigurationKey);
    } else {
     repositoryHookService.disable(toRepository, fromConfigurationKey);
-   }
-
-   if (fromHook.isConfigured()) {
-    Settings fromSettings = repositoryHookService.getSettings(fromRepository, fromConfigurationKey);
-    repositoryHookService.setSettings(toRepository, fromConfigurationKey, fromSettings);
    }
   }
  }

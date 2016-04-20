@@ -17,6 +17,7 @@ define('plugin/ssfb/globaladmin', [
   });
 
   $(".sync-now").click(function(e) {
+   e.preventDefault();
    common.syncNow('', '');
   });
 
