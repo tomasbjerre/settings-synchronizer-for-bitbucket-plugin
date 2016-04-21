@@ -12,7 +12,7 @@
  </p>
 
  <!--
- <form id="globalsyncadmin" class="aui">
+ <form id="globalsyncadmin" class="aui ssfb">
   <fieldset class="group">
    <legend>
     <span>Sync periodically</span>
@@ -61,7 +61,7 @@
  </form>
 //-->
 
- <form id="globalrepoadmin" class="aui">
+ <form id="globalrepoadmin" class="aui ssfb">
   <fieldset class="group">
    <legend>
     <span>Batch config all repos</span>
@@ -118,7 +118,7 @@
  </form>
 
 
- <form id="globalactionadmin" class="aui">
+ <form id="globalactionadmin" class="aui ssfb">
   <fieldset class="group">
    <legend>
     <span>Sync now</span>
@@ -132,8 +132,6 @@
    </div>
   </fieldset>
   <form>
-
-
 </body>
 
 </html>

@@ -14,7 +14,7 @@
   There is also settings on the <a href="javascript:location.href=AJS.contextPath()+'/plugins/servlet/ssfb/globaladminview'">global admin page</a>. Where scheduled sync can be configured.
  </p>
 
- <form id="repoadmin" class="aui">
+ <form id="repoadmin" class="aui ssfb">
 
   <fieldset class="group">
    <legend>

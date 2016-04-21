@@ -5,12 +5,22 @@ Changelog of Settings Synchronizer for Bitbucket.
 ## Unreleased
 ### No issue
 
+**Syncing all repos, not only the first 25**
+
+ * And disabling buttons while ajax requests are in progress. 
+
+[c0f93ea784627d1](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket/commit/c0f93ea784627d1) Tomas Bjerre *2016-04-21 16:37:57*
+
+
+## 1.1
+### No issue
+
 **Enabling plugin after settings saved**
 
  * Was causing error if plugin was enabled before settings had been applied. 
  * Also changing global repo admin js so that settings are saved with ajax. 
 
-[4c5f7c9a7c450e8](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket/commit/4c5f7c9a7c450e8) Tomas Bjerre *2016-04-20 19:46:23*
+[a246b8c86c3aae3](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket/commit/a246b8c86c3aae3) Tomas Bjerre *2016-04-20 19:47:42*
 
 **Doc**
 
