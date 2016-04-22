@@ -34,7 +34,7 @@ define('plugin/ssfb/common', [
  }
 
  function getProjects(whenDone) {
-  var projectsUrl = AJS.contextPath() + "/rest/api/1.0/projects?limit=1000"; 
+  var projectsUrl = AJS.contextPath() + "/rest/api/1.0/projects?limit=999999"; 
   $.getJSON(projectsUrl, function(data) {
    whenDone(data);
   });
@@ -53,7 +53,7 @@ define('plugin/ssfb/common', [
  }
 
  function getRepos(projectKey, whenDone) {
-  var reposUrl = AJS.contextPath() + "/rest/api/1.0/projects/" + projectKey + "/repos?limit=1000"; 
+  var reposUrl = AJS.contextPath() + "/rest/api/1.0/projects/" + projectKey + "/repos?limit=999999"; 
   $.getJSON(reposUrl, function(data) {
    whenDone(data);
   });

@@ -9,7 +9,7 @@ Changelog of Settings Synchronizer for Bitbucket.
 
  * And disabling buttons while ajax requests are in progress. 
 
-[c0f93ea784627d1](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket/commit/c0f93ea784627d1) Tomas Bjerre *2016-04-21 16:37:57*
+[4a4035fbfa8fe99](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket/commit/4a4035fbfa8fe99) Tomas Bjerre *2016-04-21 16:43:50*
 
 
 ## 1.1
