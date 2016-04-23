@@ -173,7 +173,7 @@ Changelog of Settings Synchronizer for Bitbucket.
  * {{.}} 
 {{/messageBodyItems}}
 
-[{{hash}}](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket/commit/{{hash}}) {{authorName}} *{{commitTime}}*
+[{{hash}}](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/{{hash}}) {{authorName}} *{{commitTime}}*
 
   {{/commits}}
 

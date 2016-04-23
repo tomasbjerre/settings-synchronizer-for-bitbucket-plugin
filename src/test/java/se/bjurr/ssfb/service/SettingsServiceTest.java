@@ -22,6 +22,8 @@ import se.bjurr.ssfb.settings.SsfbSettings;
 
 import com.atlassian.sal.api.pluginsettings.PluginSettings;
 import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
+import com.atlassian.sal.api.transaction.TransactionCallback;
+import com.atlassian.sal.api.transaction.TransactionTemplate;
 import com.google.common.base.Optional;
 import com.google.gson.Gson;
 
@@ -42,7 +44,13 @@ public class SettingsServiceTest {
   initMocks(this);
   when(pluginSettingsFactory.createGlobalSettings())//
     .thenReturn(pluginSettings);
-  sut = new SettingsService(pluginSettingsFactory);
+  TransactionTemplate transactionTemplate = new TransactionTemplate() {
+   @Override
+   public <T> T execute(TransactionCallback<T> action) {
+    return action.doInTransaction();
+   }
+  };
+  sut = new SettingsService(pluginSettingsFactory, transactionTemplate);
  }
 
  @Test
