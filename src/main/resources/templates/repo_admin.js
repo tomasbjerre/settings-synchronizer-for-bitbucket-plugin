@@ -11,6 +11,8 @@ define('plugin/ssfb/repoadmin', [
  $(document).ready(function() {
   $.getJSON(repoAdminUrl, function(data) {
    common.setupRepoSettingsForm(data);
+  }).fail(function() {
+   common.setupRepoSettingsForm(undefined);
   });
 
   $("#repoadmin").submit(function(e) {

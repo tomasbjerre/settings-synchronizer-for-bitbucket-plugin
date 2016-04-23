@@ -2,6 +2,7 @@ package se.bjurr.ssfb.presentation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import org.junit.Before;
@@ -11,12 +12,17 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 
 import se.bjurr.ssfb.admin.dto.SsfbSyncDTO;
-import se.bjurr.ssfb.presentation.GlobalSyncServlet;
 import se.bjurr.ssfb.service.SyncService;
+
+import com.atlassian.sal.api.user.UserKey;
+import com.atlassian.sal.api.user.UserManager;
 
 public class GlobalSyncServletTest {
  @Mock
  private SyncService syncService;
+ @Mock
+ private UserManager userManager;
+ private final UserKey userKey = new UserKey("userkey");
  @Captor
  private ArgumentCaptor<String> repoSlugCaptor;
  @Captor
@@ -26,7 +32,11 @@ public class GlobalSyncServletTest {
  @Before
  public void before() {
   initMocks(this);
-  sut = new GlobalSyncServlet(syncService);
+  sut = new GlobalSyncServlet(syncService, userManager);
+  when(userManager.getRemoteUserKey())//
+    .thenReturn(userKey);
+  when(userManager.isAdmin(userKey))//
+    .thenReturn(true);
  }
 
  @Test

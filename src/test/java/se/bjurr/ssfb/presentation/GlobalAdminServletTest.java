@@ -20,11 +20,17 @@ import se.bjurr.ssfb.service.ScheduleService;
 import se.bjurr.ssfb.service.SettingsService;
 import se.bjurr.ssfb.settings.SsfbSettings;
 
+import com.atlassian.sal.api.user.UserKey;
+import com.atlassian.sal.api.user.UserManager;
+
 public class GlobalAdminServletTest {
  @Mock
  private ScheduleService scheduleService;
  @Mock
  private SettingsService settingsService;
+ @Mock
+ private UserManager userManager;
+ private final UserKey userKey = new UserKey("userkey");
  @Captor
  private ArgumentCaptor<SsfbSettings> updatedSettingsCaptor;
  private GlobalAdminServlet sut;
@@ -32,7 +38,11 @@ public class GlobalAdminServletTest {
  @Before
  public void before() {
   initMocks(this);
-  sut = new GlobalAdminServlet(scheduleService, settingsService);
+  sut = new GlobalAdminServlet(scheduleService, settingsService, userManager);
+  when(userManager.getRemoteUserKey())//
+    .thenReturn(userKey);
+  when(userManager.isAdmin(userKey))//
+    .thenReturn(true);
  }
 
  @Test

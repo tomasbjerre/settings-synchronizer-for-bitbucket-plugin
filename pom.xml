@@ -141,7 +141,7 @@
       </goals>
       <configuration>
        <readableTagName>-([^-]+?)$</readableTagName>
-       <gitHubApi>https://api.github.com/repos/tomasbjerre/settings-synchronizer-for-bitbucket</gitHubApi>
+       <gitHubApi>https://api.github.com/repos/tomasbjerre/settings-synchronizer-for-bitbucket-plugin</gitHubApi>
        <gitHubToken>${GITHUB_OAUTH2TOKEN}</gitHubToken>
        <gitHubIssuePattern>#([0-9]*)</gitHubIssuePattern>
        <filePath>CHANGELOG.md</filePath>

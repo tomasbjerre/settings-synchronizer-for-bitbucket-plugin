@@ -3,6 +3,24 @@
 Changelog of Settings Synchronizer for Bitbucket.
 
 ## Unreleased
+### GitHub [#8](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/issues/8) Deny user if not logged in
+
+**Only allowing admins to configure plugin #8**
+
+ * Also making sure repo admin page does not crash on initial load. 
+
+[14b3415ca8402e9](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket/commit/14b3415ca8402e9) Tomas Bjerre *2016-04-23 07:33:38*
+
+
+### No issue
+
+**Using 999999 as limit in rest calls**
+
+
+[fdeee27fcf9138d](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket/commit/fdeee27fcf9138d) Tomas Bjerre *2016-04-22 18:43:23*
+
+
+## 1.2
 ### No issue
 
 **Syncing all repos, not only the first 25**

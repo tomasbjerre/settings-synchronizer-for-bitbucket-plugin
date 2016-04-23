@@ -61,24 +61,38 @@ define('plugin/ssfb/common', [
 
  function setupRepoSettingsForm(repoSettings) {
   getProjects(function(data) {
-   populateProjects(data, repoSettings.fromProject);
+   if (repoSettings) {
+    populateProjects(data, repoSettings.fromProject);
+   } else {
+    populateProjects(data, undefined);
+   }
    getRepos($('#fromProject').val(), function(data) {
-    populateRepos(data, repoSettings.fromRepo);
+    if (repoSettings) {
+     populateRepos(data, repoSettings.fromRepo);
+    } else {
+     populateRepos(data, undefined);
+    }
    });
   });
 
   $('#fromProject').change(function() {
    getRepos($('#fromProject').val(), function(data) {
-    populateRepos(data, repoSettings.fromProject);
+    if (repoSettings) {
+     populateRepos(data, repoSettings.fromRepo);
+    } else {
+     populateRepos(data, undefined);
+    }
    });
   });
 
-  $('#repositoryDetails').attr('checked', repoSettings.repositoryDetails);
-  $('#repositoryHooks').attr('checked', repoSettings.repositoryHooks);
-  $('#repositoryPermissions').attr('checked', repoSettings.repositoryPermissions);
-  $('#branchPermissions').attr('checked', repoSettings.branchPermissions);
-  $('#pullRequestSettings').attr('checked', repoSettings.pullRequestSettings);
-  $('#branchingModel').attr('checked', repoSettings.branchingModel);
+  if (repoSettings) {
+   $('#repositoryDetails').attr('checked', repoSettings.repositoryDetails);
+   $('#repositoryHooks').attr('checked', repoSettings.repositoryHooks);
+   $('#repositoryPermissions').attr('checked', repoSettings.repositoryPermissions);
+   $('#branchPermissions').attr('checked', repoSettings.branchPermissions);
+   $('#pullRequestSettings').attr('checked', repoSettings.pullRequestSettings);
+   $('#branchingModel').attr('checked', repoSettings.branchingModel);
+  }
  }
 
  function syncNow(projectKey, repoSlug) {

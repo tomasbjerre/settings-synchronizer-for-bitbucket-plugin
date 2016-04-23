@@ -12,7 +12,6 @@ import static se.bjurr.ssfb.settings.SsfbRepoSettings.ssfbRepoSettingsBuilder;
 import static se.bjurr.ssfb.settings.SsfbRepoSettingsTransfomer.fromSsfbRepoSettingsDTO;
 import static se.bjurr.ssfb.settings.SsfbSettings.ssfbSettingsBuilder;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
 
 import org.junit.Before;
@@ -26,10 +25,16 @@ import se.bjurr.ssfb.service.SettingsService;
 import se.bjurr.ssfb.settings.SsfbRepoSettings;
 import se.bjurr.ssfb.settings.SsfbSettings;
 
+import com.atlassian.sal.api.user.UserKey;
+import com.atlassian.sal.api.user.UserManager;
+
 public class RepoAdminServletTest {
 
  @Mock
  private SettingsService settingsService;
+ @Mock
+ private UserManager userManager;
+ private final UserKey userKey = new UserKey("userkey");
  @Captor
  private ArgumentCaptor<String> ssfbSettingsStringCaptor;
  @Captor
@@ -41,12 +46,15 @@ public class RepoAdminServletTest {
  private RepoAdminServlet sut;
  private final String projectKey = "projectKey";
  private final String repoSlug = "repoSlug";
- private HttpServletRequest request;
 
  @Before
  public void before() {
   initMocks(this);
-  sut = new RepoAdminServlet(settingsService);
+  sut = new RepoAdminServlet(settingsService, userManager);
+  when(userManager.getRemoteUserKey())//
+    .thenReturn(userKey);
+  when(userManager.isAdmin(userKey))//
+    .thenReturn(true);
  }
 
  @Test
@@ -69,7 +77,7 @@ public class RepoAdminServletTest {
     .build();
   SsfbRepoSettingsDTO ssfbRepoSettingsDTO = fromSsfbRepoSettings(expectedSsfbRepoSettings);
 
-  sut.post(projectKey, repoSlug, ssfbRepoSettingsDTO, request);
+  sut.post(projectKey, repoSlug, ssfbRepoSettingsDTO);
 
   verify(settingsService)//
     .setSsfbSettings(projectKeyCaptor.capture(), repoSlugCaptor.capture(), ssfbRepoSettingsCaptor.capture());
@@ -96,7 +104,7 @@ public class RepoAdminServletTest {
     .build();
   SsfbRepoSettingsDTO ssfbRepoSettingsDTO = fromSsfbRepoSettings(expectedSsfbRepoSettings);
 
-  sut.post(projectKey, repoSlug, ssfbRepoSettingsDTO, request);
+  sut.post(projectKey, repoSlug, ssfbRepoSettingsDTO);
 
   verify(settingsService)//
     .setSsfbSettings(projectKeyCaptor.capture(), repoSlugCaptor.capture(), ssfbRepoSettingsCaptor.capture());
