@@ -6,7 +6,6 @@ import static javax.ws.rs.core.Response.ok;
 import static javax.ws.rs.core.Response.status;
 import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
 import static se.bjurr.ssfb.settings.SsfbGlobalSyncSettingsDTOTransformer.fromSettings;
-import static se.bjurr.ssfb.settings.SsfbSettings.ssfbSettingsBuilder;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -54,14 +53,9 @@ public class GlobalAdminServlet {
      .build();
   }
 
-  SsfbSettings settings = settingsService.getSsfbSettings();
-  SsfbSettings updatedSettings = ssfbSettingsBuilder(settings)//
-    .setStartTime(ssfbRepoSettingsDTO.getStartTime())//
-    .setSyncEvery(SyncEvery.valueOf(ssfbRepoSettingsDTO.getSyncEvery()))//
-    .build();
-
-  settingsService.setSsfbSettings(updatedSettings);
-  scheduleService.setup(updatedSettings.getStartTime(), updatedSettings.getSyncEvery());
+  SyncEvery syncEvery = SyncEvery.valueOf(ssfbRepoSettingsDTO.getSyncEvery());
+  settingsService.setSsfbSettings(ssfbRepoSettingsDTO.getStartTime(), syncEvery);
+  scheduleService.setup(ssfbRepoSettingsDTO.getStartTime(), syncEvery);
   return ok() //
     .build();
  }

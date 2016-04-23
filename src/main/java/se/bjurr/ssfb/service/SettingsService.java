@@ -3,6 +3,7 @@ package se.bjurr.ssfb.service;
 import static se.bjurr.ssfb.settings.SsfbSettings.ssfbSettingsBuilder;
 import se.bjurr.ssfb.settings.SsfbRepoSettings;
 import se.bjurr.ssfb.settings.SsfbSettings;
+import se.bjurr.ssfb.settings.SyncEvery;
 
 import com.atlassian.sal.api.pluginsettings.PluginSettings;
 import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
@@ -24,12 +25,53 @@ public class SettingsService {
  }
 
  public SsfbSettings getSsfbSettings() {
-  return transactionTemplate.execute(new TransactionCallback<SsfbSettings>() {
+  return inSynchronizedTransaction(new TransactionCallback<SsfbSettings>() {
    @Override
    public SsfbSettings doInTransaction() {
     return doGetSsfbSettings();
    }
   });
+ }
+
+ public void setSsfbSettings(String startTime, SyncEvery syncEvery) {
+  inSynchronizedTransaction(new TransactionCallback<Void>() {
+   @Override
+   public Void doInTransaction() {
+    SsfbSettings oldSettings = doGetSsfbSettings();
+    SsfbSettings newSettings = ssfbSettingsBuilder(oldSettings)//
+      .setStartTime(startTime)//
+      .setSyncEvery(syncEvery)//
+      .build();
+    doSetSsfbSettings(newSettings);
+    return null;
+   }
+  });
+ }
+
+ public void setSsfbSettings(String projectKey, String repoSlug, SsfbRepoSettings ssfbRepoSettings) {
+  inSynchronizedTransaction(new TransactionCallback<Void>() {
+   @Override
+   public Void doInTransaction() {
+    SsfbSettings ssfbSettings = doGetSsfbSettings();
+    ssfbSettings.setRepoSettings(projectKey, repoSlug, ssfbRepoSettings);
+    doSetSsfbSettings(ssfbSettings);
+    return null;
+   }
+  });
+ }
+
+ public Optional<SsfbRepoSettings> getSsfbSettings(String projectKey, String repoSlug) {
+  return inSynchronizedTransaction(new TransactionCallback<Optional<SsfbRepoSettings>>() {
+   @Override
+   public Optional<SsfbRepoSettings> doInTransaction() {
+    return doGetSsfbSettings()//
+      .findRepoSettings(projectKey, repoSlug);
+   }
+  });
+ }
+
+ private synchronized <T> T inSynchronizedTransaction(TransactionCallback<T> transactionCallback) {
+  return transactionTemplate.execute(transactionCallback);
  }
 
  private SsfbSettings doGetSsfbSettings() {
@@ -40,30 +82,8 @@ public class SettingsService {
   return gson.fromJson(storedSettings.toString(), SsfbSettings.class);
  }
 
- public void setSsfbSettings(SsfbSettings ssfbSettings) {
-  transactionTemplate.execute(new TransactionCallback<Void>() {
-   @Override
-   public Void doInTransaction() {
-    doSetSsfbSettings(ssfbSettings);
-    return null;
-   }
-  });
- }
-
  private void doSetSsfbSettings(SsfbSettings ssfbSettings) {
   String data = gson.toJson(ssfbSettings);
   pluginSettings.put(STORAGE_KEY, data);
  }
-
- public void setSsfbSettings(String projectKey, String repoSlug, SsfbRepoSettings ssfbRepoSettings) {
-  SsfbSettings ssfbSettings = getSsfbSettings();
-  ssfbSettings.setRepoSettings(projectKey, repoSlug, ssfbRepoSettings);
-  setSsfbSettings(ssfbSettings);
- }
-
- public Optional<SsfbRepoSettings> getSsfbSettings(String projectKey, String repoSlug) {
-  return getSsfbSettings()//
-    .findRepoSettings(projectKey, repoSlug);
- }
-
 }

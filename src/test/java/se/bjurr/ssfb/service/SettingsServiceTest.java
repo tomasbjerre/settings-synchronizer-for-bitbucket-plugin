@@ -9,6 +9,8 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import static se.bjurr.ssfb.service.SettingsService.STORAGE_KEY;
 import static se.bjurr.ssfb.settings.SsfbRepoSettings.ssfbRepoSettingsBuilder;
 import static se.bjurr.ssfb.settings.SsfbSettings.ssfbSettingsBuilder;
+import static se.bjurr.ssfb.settings.SyncEvery.DAILY;
+import static se.bjurr.ssfb.settings.SyncEvery.HOURLY;
 import static se.bjurr.ssfb.settings.SyncEvery.NEVER;
 
 import org.junit.Before;
@@ -109,6 +111,24 @@ public class SettingsServiceTest {
     .isEqualTo(NEVER);
   assertThat(ssfbSettings.findRepoSettings("projectKey", "repoSlug").get())//
     .isEqualTo(expectedSsfbRepoSettings);
+ }
+
+ @Test
+ public void testThatSyncSettingsCanBeSaved() {
+  SsfbSettings oldStoredData = ssfbSettingsBuilder()//
+    .setStartTime("03:04")//
+    .setSyncEvery(HOURLY)//
+    .build();
+  when(pluginSettings.get(STORAGE_KEY))//
+    .thenReturn(new Gson().toJson(oldStoredData));
+
+  sut.setSsfbSettings("01:01", DAILY);
+
+  SsfbSettings expectedStoredData = ssfbSettingsBuilder()//
+    .setStartTime("01:01")//
+    .setSyncEvery(DAILY)//
+    .build();
+  verify(pluginSettings).put(eq(STORAGE_KEY), eq(new Gson().toJson(expectedStoredData)));
  }
 
  @Test

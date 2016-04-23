@@ -1,6 +1,7 @@
 package se.bjurr.ssfb.presentation;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -11,8 +12,7 @@ import javax.ws.rs.core.Response;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 
 import se.bjurr.ssfb.admin.dto.SsfbGlobalSyncSettingsDTO;
@@ -31,8 +31,6 @@ public class GlobalAdminServletTest {
  @Mock
  private UserManager userManager;
  private final UserKey userKey = new UserKey("userkey");
- @Captor
- private ArgumentCaptor<SsfbSettings> updatedSettingsCaptor;
  private GlobalAdminServlet sut;
 
  @Before
@@ -96,10 +94,6 @@ public class GlobalAdminServletTest {
   verify(scheduleService)//
     .setup("02:02", HOURLY);
   verify(settingsService)//
-    .setSsfbSettings(updatedSettingsCaptor.capture());
-  assertThat(updatedSettingsCaptor.getValue().getStartTime())//
-    .isEqualTo("02:02");
-  assertThat(updatedSettingsCaptor.getValue().getSyncEvery())//
-    .isEqualTo(HOURLY);
+    .setSsfbSettings(eq("02:02"), Matchers.eq(HOURLY));
  }
 }

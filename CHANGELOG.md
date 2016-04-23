@@ -5,11 +5,20 @@ Changelog of Settings Synchronizer for Bitbucket.
 ## Unreleased
 ### GitHub [#7](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/issues/7) Use transactionTemplate
 
+**Handling settings synchronized #7**
+
+
+[0a212af47d79d46](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/0a212af47d79d46) Tomas Bjerre *2016-04-23 11:02:23*
+
+
+## 1.3
+### GitHub [#7](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/issues/7) Use transactionTemplate
+
 **Using transactionTemplate #7**
 
  * When loading and persisting plugin settings. 
 
-[55236900743ea29](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/55236900743ea29) Tomas Bjerre *2016-04-23 07:52:59*
+[d2b96dc51f8bdd6](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/d2b96dc51f8bdd6) Tomas Bjerre *2016-04-23 07:54:48*
 
 
 ### GitHub [#8](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/issues/8) Deny user if not logged in
