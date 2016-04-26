@@ -8,7 +8,7 @@ Changelog of Settings Synchronizer for Bitbucket.
 **Handling settings synchronized #7**
 
 
-[0a212af47d79d46](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/0a212af47d79d46) Tomas Bjerre *2016-04-23 11:02:23*
+[ef056a410a25503](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/ef056a410a25503) Tomas Bjerre *2016-04-23 11:06:14*
 
 
 ## 1.3
