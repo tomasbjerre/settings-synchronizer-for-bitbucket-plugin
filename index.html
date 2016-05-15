@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Settings-synchronizer-for-bitbucket-plugin : Synchronize repository settings in Atlassian Bitbucket Server">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Settings-synchronizer-for-bitbucket-plugin</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin">View on GitHub</a>
+
+          <h1 id="project_title">Settings-synchronizer-for-bitbucket-plugin</h1>
+          <h2 id="project_tagline">Synchronize repository settings in Atlassian Bitbucket Server</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="settings-synchronizer-for-bitbucket-" class="anchor" href="#settings-synchronizer-for-bitbucket-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Settings Synchronizer for Bitbucket <a href="https://travis-ci.org/tomasbjerre/settings-synchronizer-for-bitbucket-plugin"><img src="https://travis-ci.org/tomasbjerre/settings-synchronizer-for-bitbucket-plugin.svg?branch=master" alt="Build Status"></a>
+</h1>
+
+<p>Synchronize repository settings in Atlassian Bitbucket Server.</p>
+
+<p>Available in <a href="https://marketplace.atlassian.com/plugins/se.bjurr.ssfb.settings-synchronizer-for-bitbucket/server/overview">Atlassian Marketplace</a>.</p>
+
+<p>Settings can be made on repository level.</p>
+
+<p><img src="https://raw.githubusercontent.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/master/sandbox/repoadmin.png" alt="Repo Settings"></p>
+
+<p>Settings can also be made on a global level.</p>
+
+<p><img src="https://raw.githubusercontent.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/master/sandbox/globalrepoadmin.png" alt="Globl Repo Settings"></p>
+
+<h2>
+<a id="developer-instructions" class="anchor" href="#developer-instructions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Developer instructions</h2>
+
+<p>Prerequisites:</p>
+
+<ul>
+<li>Atlas SDK <a href="https://developer.atlassian.com/docs/getting-started/set-up-the-atlassian-plugin-sdk-and-build-a-project">(installation instructions)</a>.</li>
+<li>JDK 1.8 or newer</li>
+</ul>
+
+<p>Generate Eclipse project:</p>
+
+<pre><code>atlas-compile eclipse:eclipse
+</code></pre>
+
+<p>Package the plugin:</p>
+
+<pre><code>atlas-package
+</code></pre>
+
+<p>Run Bitbucket, with the plugin, on localhost:</p>
+
+<pre><code>export MAVEN_OPTS=-Dplugin.resource.directories=`pwd`/src/main/resources
+mvn bitbucket:run
+</code></pre>
+
+<p>You can also remote debug on port 5005 with:</p>
+
+<pre><code>atlas-debug
+</code></pre>
+
+<p>Make a release <a href="https://developer.atlassian.com/docs/common-coding-tasks/development-cycle/packaging-and-releasing-your-plugin">(detailed instructions)</a>:</p>
+
+<pre><code>mvn -B release:prepare mvn release:perform
+</code></pre>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Settings-synchronizer-for-bitbucket-plugin maintained by <a href="https://github.com/tomasbjerre">tomasbjerre</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
