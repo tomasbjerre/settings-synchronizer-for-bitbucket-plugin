@@ -23,12 +23,8 @@ define('plugin/ssfb/globaladmin', [
 
   $("#globalrepoadmin").submit(function(e) {
    e.preventDefault();
-   common.forAllRepos(function(repo) {
-    var projectKey = repo.project.key;
-    var repoSlug = repo.slug;
-    var repoAdminUrl = AJS.contextPath() + "/rest/ssfb/1.0/projects/" + projectKey + "/repos/" + repoSlug + "/repoadmin"; 
-    common.postForm(repoAdminUrl, '#globalrepoadmin');
-   });
+   var repoAdminUrl = AJS.contextPath() + "/rest/ssfb/1.0/repoadmin"; 
+   common.postForm(repoAdminUrl, '#globalrepoadmin');
   });
  });
 });
