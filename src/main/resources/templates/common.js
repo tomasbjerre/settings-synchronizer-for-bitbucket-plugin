@@ -1,23 +1,32 @@
 define('plugin/ssfb/common', [
  'jquery',
-], function($) {
+ 'plugin/ssfb/3rdparty'
+], function($, rdparty) {
 
  function postForm(url, formId) {
-  var data = $(formId).serializeArray().reduce(function(obj, v) {
-   if (v.value === 'on') {
-    obj[v.name] = true;
-   } else {
-    obj[v.name] = v.value;
-   }
-   return obj;
-  }, {});
-  var jsonString = JSON.stringify(data);
+  var data = $(formId).serializeJSON();
   $.ajax({
    url: url,
    type: "POST",
    contentType: "application/json; charset=utf-8",
    dataType: "json",
-   data: jsonString
+   data: data,
+   success: function(data) {
+    AJS.flag({
+     close: 'auto',
+     type: 'success',
+     title: 'Saved',
+     body: '<p>=)</p>'
+    });
+   },
+   error: function(xhr, status, error) {
+    AJS.flag({
+     close: 'auto',
+     type: 'error',
+     title: 'Not saved',
+     body: '<p>:(</p>'
+    });
+   }
   });
  }
 
@@ -40,16 +49,21 @@ define('plugin/ssfb/common', [
   });
  }
 
- function populateRepos(data, selected) {
+ function populateRepos(data, repoSettings) {
   $('#fromRepo').empty();
   for (var i = 0; i < data.values.length; i++) {
    var repoSlug = data.values[i].slug;
-   if (repoSlug === selected) {
+   if (repoSettings && repoSlug === repoSettings.fromRepo) {
     $('#fromRepo').append('<option value="' + repoSlug + '" selected>' + repoSlug + '</option>');
    } else {
     $('#fromRepo').append('<option value="' + repoSlug + '">' + repoSlug + '</option>');
    }
   }
+
+  addHookCheckboxes(repoSettings);
+  $('#fromRepo').change(function() {
+   addHookCheckboxes(repoSettings);
+  });
  }
 
  function getRepos(projectKey, whenDone) {
@@ -68,7 +82,7 @@ define('plugin/ssfb/common', [
    }
    getRepos($('#fromProject').val(), function(data) {
     if (repoSettings) {
-     populateRepos(data, repoSettings.fromRepo);
+     populateRepos(data, repoSettings);
     } else {
      populateRepos(data, undefined);
     }
@@ -78,21 +92,12 @@ define('plugin/ssfb/common', [
   $('#fromProject').change(function() {
    getRepos($('#fromProject').val(), function(data) {
     if (repoSettings) {
-     populateRepos(data, repoSettings.fromRepo);
+     populateRepos(data, repoSettings);
     } else {
      populateRepos(data, undefined);
     }
    });
   });
-
-  if (repoSettings) {
-   $('#repositoryDetails').attr('checked', repoSettings.repositoryDetails);
-   $('#repositoryHooks').attr('checked', repoSettings.repositoryHooks);
-   $('#repositoryPermissions').attr('checked', repoSettings.repositoryPermissions);
-   $('#branchPermissions').attr('checked', repoSettings.branchPermissions);
-   $('#pullRequestSettings').attr('checked', repoSettings.pullRequestSettings);
-   $('#branchingModel').attr('checked', repoSettings.branchingModel);
-  }
  }
 
  function syncNow(projectKey, repoSlug) {
@@ -108,6 +113,28 @@ define('plugin/ssfb/common', [
    contentType: "application/json; charset=utf-8",
    dataType: "json",
    data: jsonString
+  });
+ }
+
+ function addHookCheckboxes(repoSettings) {
+  var projectKey = $('#fromProject').val();
+  var repoSlug = $('#fromRepo').val();
+  var hooksUrl = AJS.contextPath() + "/rest/api/1.0/projects/" + projectKey + "/repos/" + repoSlug + "/settings/hooks"; 
+  var $hooksArea = $("#hookcheckboxes");
+  $hooksArea.empty();
+  $.getJSON(hooksUrl, function(data) {
+   for (var i = 0; i < data.values.length; i++) {
+    var hook = data.values[i];
+    var $hookHtml = $(".hook-checkbox-template").clone();
+    $hookHtml.removeClass('hook-checkbox-template');
+    $hookHtml.find('input').attr('value', hook.details.key);
+    $hookHtml.find('label').html(hook.details.name);
+    if (repoSettings && repoSettings.hookConfigurationKeysToSync) {
+     var isChecked = $.inArray(hook.details.key, repoSettings.hookConfigurationKeysToSync) != -1;
+     $hookHtml.find('input').attr('checked', isChecked);
+    }
+    $hooksArea.append($hookHtml);
+   }
   });
  }
 

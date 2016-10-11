@@ -2,9 +2,8 @@ package se.bjurr.ssfb.service;
 
 import static com.google.common.collect.Maps.newHashMap;
 
+import java.util.List;
 import java.util.Map;
-
-import se.bjurr.ssfb.settings.SsfbRepoSettings;
 
 import com.atlassian.bitbucket.hook.repository.RepositoryHook;
 import com.atlassian.bitbucket.hook.repository.RepositoryHookService;
@@ -17,10 +16,12 @@ import com.atlassian.bitbucket.util.PageRequestImpl;
 import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
 import com.google.common.base.Optional;
 
+import se.bjurr.ssfb.settings.SsfbRepoSettings;
+
 public class SyncService {
 
- private final RepositoryService repositoryService;
  private final RepositoryHookService repositoryHookService;
+ private final RepositoryService repositoryService;
  private final SettingsService settingsService;
 
  public SyncService(RepositoryService repositoryService, PluginSettingsFactory pluginSettingsFactory,
@@ -30,55 +31,30 @@ public class SyncService {
   this.settingsService = settingsService;
  }
 
- public void performSyncOnAllRepos() {
-  Page<Repository> repositories = repositoryService.findAll(inOnePage());
-  for (Repository repository : repositories.getValues()) {
-   performSync(repository.getProject().getKey(), repository.getSlug());
-  }
- }
-
  public void performSync(String projectKey, String repoSlug) {
-  Optional<SsfbRepoSettings> ssfbRepoSettingsOpt = settingsService.getSsfbSettings(projectKey, repoSlug);
+  Optional<SsfbRepoSettings> ssfbRepoSettingsOpt = this.settingsService.getSsfbSettings(projectKey, repoSlug);
   if (hasNoSyncSettings(ssfbRepoSettingsOpt)) {
    return;
   }
   SsfbRepoSettings ssfbRepoSettings = ssfbRepoSettingsOpt.get();
 
-  Repository fromRepository = repositoryService.getBySlug(ssfbRepoSettings.getFromProject(),
+  Repository fromRepository = this.repositoryService.getBySlug(ssfbRepoSettings.getFromProject(),
     ssfbRepoSettings.getFromRepo());
-  Repository toRepository = repositoryService.getBySlug(projectKey, repoSlug);
+  Repository toRepository = this.repositoryService.getBySlug(projectKey, repoSlug);
 
-  if (ssfbRepoSettings.getRepositoryHooks()) {
-   syncRepositoryHooks(fromRepository, toRepository);
-  }
-
+  syncRepositoryHooks(ssfbRepoSettings.getHookConfigurationKeysToSync(), fromRepository, toRepository);
  }
 
- private void syncRepositoryHooks(Repository fromRepository, Repository toRepository) {
-  Map<String, RepositoryHook> fromHooks = getAllHooks(fromRepository);
-  for (String fromConfigurationKey : fromHooks.keySet()) {
-   RepositoryHook fromHook = fromHooks.get(fromConfigurationKey);
-
-   if (fromHook.isConfigured()) {
-    Settings fromSettings = repositoryHookService.getSettings(fromRepository, fromConfigurationKey);
-    repositoryHookService.setSettings(toRepository, fromConfigurationKey, fromSettings);
-   }
-
-   if (fromHook.isEnabled()) {
-    repositoryHookService.enable(toRepository, fromConfigurationKey);
-   } else {
-    repositoryHookService.disable(toRepository, fromConfigurationKey);
-   }
+ public void performSyncOnAllRepos() {
+  Page<Repository> repositories = this.repositoryService.findAll(inOnePage());
+  for (Repository repository : repositories.getValues()) {
+   performSync(repository.getProject().getKey(), repository.getSlug());
   }
- }
-
- private boolean hasNoSyncSettings(Optional<SsfbRepoSettings> ssfbRepoSettings) {
-  return !ssfbRepoSettings.isPresent();
  }
 
  private Map<String, RepositoryHook> getAllHooks(Repository repository) {
   Map<String, RepositoryHook> hooks = newHashMap();
-  Page<RepositoryHook> repositoryHooks = repositoryHookService.findAll(repository, inOnePage());
+  Page<RepositoryHook> repositoryHooks = this.repositoryHookService.findAll(repository, inOnePage());
   for (RepositoryHook repositoryHook : repositoryHooks.getValues()) {
    String configurationFormKey = repositoryHook.getDetails().getKey();
    hooks.put(configurationFormKey, repositoryHook);
@@ -86,8 +62,34 @@ public class SyncService {
   return hooks;
  }
 
+ private boolean hasNoSyncSettings(Optional<SsfbRepoSettings> ssfbRepoSettings) {
+  return !ssfbRepoSettings.isPresent();
+ }
+
  private PageRequest inOnePage() {
   return new PageRequestImpl(0, 1000000);
+ }
+
+ private void syncRepositoryHooks(List<String> hookConfigurationKeysToSync, Repository fromRepository,
+   Repository toRepository) {
+  Map<String, RepositoryHook> fromHooks = getAllHooks(fromRepository);
+  for (String fromConfigurationKey : fromHooks.keySet()) {
+   if (!hookConfigurationKeysToSync.contains(fromConfigurationKey)) {
+    continue;
+   }
+   RepositoryHook fromHook = fromHooks.get(fromConfigurationKey);
+
+   if (fromHook.isConfigured()) {
+    Settings fromSettings = this.repositoryHookService.getSettings(fromRepository, fromConfigurationKey);
+    this.repositoryHookService.setSettings(toRepository, fromConfigurationKey, fromSettings);
+   }
+
+   if (fromHook.isEnabled()) {
+    this.repositoryHookService.enable(toRepository, fromConfigurationKey);
+   } else {
+    this.repositoryHookService.disable(toRepository, fromConfigurationKey);
+   }
+  }
  }
 
 }

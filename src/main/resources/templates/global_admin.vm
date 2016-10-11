@@ -8,58 +8,8 @@
 <body>
  <h2>Synchronization settings</h2>
  <p>
-  There is also settings on each repo settings page. Where what to sync can be configured.
+  There is also settings on each repo settings page.
  </p>
-
- <!--
- <form id="globalsyncadmin" class="aui ssfb">
-  <fieldset class="group">
-   <legend>
-    <span>Sync periodically</span>
-   </legend>
-   <select class="select" id="startTime" name="startTime">
-    <option value="00:00">00:00</option>
-    <option value="01:00">01:00</option>
-    <option value="02:00">02:00</option>
-    <option value="03:00">03:00</option>
-    <option value="04:00">04:00</option>
-    <option value="05:00">05:00</option>
-    <option value="06:00">06:00</option>
-    <option value="07:00">07:00</option>
-    <option value="08:00">08:00</option>
-    <option value="09:00">09:00</option>
-    <option value="10:00">10:00</option>
-    <option value="11:00">11:00</option>
-    <option value="12:00">12:00</option>
-    <option value="13:00">13:00</option>
-    <option value="14:00">14:00</option>
-    <option value="15:00">15:00</option>
-    <option value="16:00">16:00</option>
-    <option value="17:00">17:00</option>
-    <option value="18:00">18:00</option>
-    <option value="19:00">19:00</option>
-    <option value="20:00">20:00</option>
-    <option value="21:00">21:00</option>
-    <option value="22:00">22:00</option>
-    <option value="23:00">23:00</option>
-   </select>
-   <select class="select" id="syncEvery" name="syncEvery">
-    <option value="NEVER">Do not schedule sync</option>
-    <option value="HOURLY">Every hour</option>
-    <option value="DAILY">Every day</option>
-   </select>
-  </fieldset>
-
-  <fieldset class="group">
-   <div class="aui-buttons">
-    <button class="aui-button aui-button-primary">Save</button>
-   </div>
-   <div class="description">
-    Settings in all repos will be reset to their master repo at this time, every day.
-   </div>
-  </fieldset>
- </form>
-//-->
 
  <form id="globalrepoadmin" class="aui ssfb">
   <fieldset class="group">
@@ -72,47 +22,26 @@
 
    <select class="select" id="fromRepo" name="fromRepo">
    </select>
-   <!--
-   <div class="checkbox">
-    <input class="checkbox" type="checkbox" name="repositoryDetails" id="repositoryDetails">
-    <label for="repositoryDetails">Repository details</label>
-   </div>
-//-->
 
-   <div class="checkbox">
-    <input class="checkbox" type="checkbox" name="repositoryHooks" id="repositoryHooks">
-    <label for="repositoryHooks">Repository hooks</label>
-   </div>
+   <fieldset class="group">
+    <legend>
+     <span>Hooks</span>
+    </legend>
 
-   <!--
-   <div class="checkbox">
-    <input class="checkbox" type="checkbox" name="repositoryPermissions" id="repositoryPermissions">
-    <label for="repositoryPermissions">Repository permissions</label>
-   </div>
-
-   <div class="checkbox">
-    <input class="checkbox" type="checkbox" name="branchPermissions" id="branchPermissions">
-    <label for="branchPermissions">Branch permissions</label>
-   </div>
-
-   <div class="checkbox">
-    <input class="checkbox" type="checkbox" name="pullRequestSettings" id="pullRequestSettings">
-    <label for="pullRequestSettings">Pull request settings</label>
-   </div>
-
-   <div class="checkbox">
-    <input class="checkbox" type="checkbox" name="branchingModel" id="branchingModel">
-    <label for="branchingModel">Branching model</label>
-   </div>
-  </fieldset>
-//-->
+    <div class="checkbox hook-checkbox-template">
+     <input class="checkbox" type="checkbox" name="hookConfigurationKeysToSync[]">
+     <label for="hookConfigurationKeysToSync[]"></label>
+    </div>
+    <div class="field-group" id="hookcheckboxes">
+    </div>
+   </fieldset>
 
    <fieldset class="group">
     <div class="aui-buttons">
      <button class="aui-button aui-button-primary">Save</button>
     </div>
     <div class="description">
-     Settings in all repos will be reset to these settings.
+     Sync-settings in all repos will be reset to these settings.
     </div>
    </fieldset>
  </form>
@@ -128,7 +57,7 @@
     <button class="aui-button aui-button-primary sync-now">Sync now</button>
    </div>
    <div class="description">
-    Settings in all repos will be reset to their master repo.
+    Settings in all repos will be reset to their master repo. You may want to save before you sync, if the repos does not already have sync-settings.
    </div>
   </fieldset>
   <form>

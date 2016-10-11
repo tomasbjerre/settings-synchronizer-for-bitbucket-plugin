@@ -3,6 +3,62 @@
 Changelog of Settings Synchronizer for Bitbucket.
 
 ## Unreleased
+### GitHub [#10](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/issues/10) Ability to choose what hook to sync
+
+**Adding possibility to select which hooks to sync #9 #10**
+
+ * Doing batch save in backend #9. After issues in a 10000+ repos installation. 
+ * Removing dead code. 
+ * Allowing admin to pick the hooks that should be synced. 
+
+[d5088b5d5e44221](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/d5088b5d5e44221) Tomas Bjerre *2016-10-14 18:10:02*
+
+
+### GitHub [#9](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/issues/9) Tried and working in Test but not working in Production
+
+**Adding possibility to select which hooks to sync #9 #10**
+
+ * Doing batch save in backend #9. After issues in a 10000+ repos installation. 
+ * Removing dead code. 
+ * Allowing admin to pick the hooks that should be synced. 
+
+[d5088b5d5e44221](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/d5088b5d5e44221) Tomas Bjerre *2016-10-14 18:10:02*
+
+
+## 1.6
+### GitHub [#9](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/issues/9) Tried and working in Test but not working in Production
+
+**Revert "Doing batch save in backend #9"**
+
+ * This reverts commit 486107f52975705c22f0be98c02ee66769342012. 
+
+[ad5ec2e259e5b74](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/ad5ec2e259e5b74) Tomas Bjerre *2016-10-13 19:02:51*
+
+
+## 1.5
+### GitHub [#9](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/issues/9) Tried and working in Test but not working in Production
+
+**Doing batch save in backend #9**
+
+ * For a repo with 10000+ repos, doing it in frontend may result in CANCELLED requests. 
+
+[486107f52975705](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/486107f52975705) Tomas Bjerre *2016-10-04 15:01:53*
+
+
+### No issue
+
+**Only formatting files in src with jsbeautifier**
+
+
+[9bc354f122e3503](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/9bc354f122e3503) Tomas Bjerre *2016-05-07 06:21:36*
+
+**doc**
+
+
+[7f00708515f2e13](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/7f00708515f2e13) Tomas Bjerre *2016-04-26 04:18:07*
+
+
+## 1.4
 ### GitHub [#7](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/issues/7) Use transactionTemplate
 
 **Handling settings synchronized #7**

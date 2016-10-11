@@ -2,6 +2,8 @@ package se.bjurr.ssfb.admin.dto;
 
 import static javax.xml.bind.annotation.XmlAccessType.FIELD;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -10,54 +12,68 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class SsfbRepoSettingsDTO {
  public String fromProject;
  public String fromRepo;
- public boolean repositoryDetails;
- public boolean repositoryHooks;
- public boolean repositoryPermissions;
- public boolean branchPermissions;
- public boolean pullRequestSettings;
- public boolean branchingModel;
+ public List<String> hookConfigurationKeysToSync;
 
  public SsfbRepoSettingsDTO() {
  }
 
- public Boolean getBranchingModel() {
-  return branchingModel;
- }
-
- public Boolean getBranchPermissions() {
-  return branchPermissions;
+ @Override
+ public boolean equals(Object obj) {
+  if (this == obj) {
+   return true;
+  }
+  if (obj == null) {
+   return false;
+  }
+  if (getClass() != obj.getClass()) {
+   return false;
+  }
+  SsfbRepoSettingsDTO other = (SsfbRepoSettingsDTO) obj;
+  if (this.fromProject == null) {
+   if (other.fromProject != null) {
+    return false;
+   }
+  } else if (!this.fromProject.equals(other.fromProject)) {
+   return false;
+  }
+  if (this.fromRepo == null) {
+   if (other.fromRepo != null) {
+    return false;
+   }
+  } else if (!this.fromRepo.equals(other.fromRepo)) {
+   return false;
+  }
+  if (this.hookConfigurationKeysToSync == null) {
+   if (other.hookConfigurationKeysToSync != null) {
+    return false;
+   }
+  } else if (!this.hookConfigurationKeysToSync.equals(other.hookConfigurationKeysToSync)) {
+   return false;
+  }
+  return true;
  }
 
  public String getFromProject() {
-  return fromProject;
+  return this.fromProject;
  }
 
  public String getFromRepo() {
-  return fromRepo;
+  return this.fromRepo;
  }
 
- public Boolean getPullRequestSettings() {
-  return pullRequestSettings;
+ public List<String> getHookConfigurationKeysToSync() {
+  return this.hookConfigurationKeysToSync;
  }
 
- public Boolean getRepositoryDetails() {
-  return repositoryDetails;
- }
-
- public Boolean getRepositoryHooks() {
-  return repositoryHooks;
- }
-
- public Boolean getRepositoryPermissions() {
-  return repositoryPermissions;
- }
-
- public void setBranchingModel(Boolean branchingModel) {
-  this.branchingModel = branchingModel;
- }
-
- public void setBranchPermissions(Boolean branchPermissions) {
-  this.branchPermissions = branchPermissions;
+ @Override
+ public int hashCode() {
+  final int prime = 31;
+  int result = 1;
+  result = prime * result + ((this.fromProject == null) ? 0 : this.fromProject.hashCode());
+  result = prime * result + ((this.fromRepo == null) ? 0 : this.fromRepo.hashCode());
+  result = prime * result
+    + ((this.hookConfigurationKeysToSync == null) ? 0 : this.hookConfigurationKeysToSync.hashCode());
+  return result;
  }
 
  public void setFromProject(String fromProject) {
@@ -68,19 +84,13 @@ public class SsfbRepoSettingsDTO {
   this.fromRepo = fromRepo;
  }
 
- public void setPullRequestSettings(Boolean pullRequestSettings) {
-  this.pullRequestSettings = pullRequestSettings;
+ public void setHookConfigurationKeysToSync(List<String> hookConfigurationKeysToSync) {
+  this.hookConfigurationKeysToSync = hookConfigurationKeysToSync;
  }
 
- public void setRepositoryDetails(Boolean repositoryDetails) {
-  this.repositoryDetails = repositoryDetails;
- }
-
- public void setRepositoryHooks(Boolean repositoryHooks) {
-  this.repositoryHooks = repositoryHooks;
- }
-
- public void setRepositoryPermissions(Boolean repositoryPermissions) {
-  this.repositoryPermissions = repositoryPermissions;
+ @Override
+ public String toString() {
+  return "SsfbRepoSettingsDTO [fromProject=" + this.fromProject + ", fromRepo=" + this.fromRepo
+    + ", hookConfigurationKeysToSync=" + this.hookConfigurationKeysToSync + "]";
  }
 }

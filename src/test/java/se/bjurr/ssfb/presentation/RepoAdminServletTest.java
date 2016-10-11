@@ -1,6 +1,6 @@
 package se.bjurr.ssfb.presentation;
 
-import static java.lang.Boolean.TRUE;
+import static com.google.common.collect.Lists.newArrayList;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import static javax.ws.rs.core.Response.Status.OK;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,49 +20,49 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 
+import com.atlassian.sal.api.user.UserKey;
+import com.atlassian.sal.api.user.UserManager;
+
 import se.bjurr.ssfb.admin.dto.SsfbRepoSettingsDTO;
 import se.bjurr.ssfb.service.SettingsService;
 import se.bjurr.ssfb.settings.SsfbRepoSettings;
 import se.bjurr.ssfb.settings.SsfbSettings;
 
-import com.atlassian.sal.api.user.UserKey;
-import com.atlassian.sal.api.user.UserManager;
-
 public class RepoAdminServletTest {
 
- @Mock
- private SettingsService settingsService;
- @Mock
- private UserManager userManager;
- private final UserKey userKey = new UserKey("userkey");
- @Captor
- private ArgumentCaptor<String> ssfbSettingsStringCaptor;
+ private final String projectKey = "projectKey";
  @Captor
  private ArgumentCaptor<String> projectKeyCaptor;
+ private final String repoSlug = "repoSlug";
  @Captor
  private ArgumentCaptor<String> repoSlugCaptor;
+ @Mock
+ private SettingsService settingsService;
  @Captor
  private ArgumentCaptor<SsfbRepoSettings> ssfbRepoSettingsCaptor;
+ @Captor
+ private ArgumentCaptor<String> ssfbSettingsStringCaptor;
  private RepoAdminServlet sut;
- private final String projectKey = "projectKey";
- private final String repoSlug = "repoSlug";
+ private final UserKey userKey = new UserKey("userkey");
+ @Mock
+ private UserManager userManager;
 
  @Before
  public void before() {
   initMocks(this);
-  sut = new RepoAdminServlet(settingsService, userManager);
-  when(userManager.getRemoteUserKey())//
-    .thenReturn(userKey);
-  when(userManager.isAdmin(userKey))//
+  this.sut = new RepoAdminServlet(this.settingsService, this.userManager);
+  when(this.userManager.getRemoteUserKey())//
+    .thenReturn(this.userKey);
+  when(this.userManager.isAdmin(this.userKey))//
     .thenReturn(true);
  }
 
  @Test
  public void testThatEmptySettingsIsUsedFirstTime() throws Exception {
-  when(settingsService.getSsfbSettings())//
+  when(this.settingsService.getSsfbSettings())//
     .thenReturn(ssfbSettingsBuilder().build());
 
-  Response actual = sut.get(projectKey, repoSlug);
+  Response actual = this.sut.get(this.projectKey, this.repoSlug);
   assertThat(actual.getStatus())//
     .isEqualTo(NOT_FOUND.getStatusCode());
  }
@@ -70,77 +70,67 @@ public class RepoAdminServletTest {
  @Test
  public void testThatSettingsCanBePartialyStored() throws Exception {
   SsfbRepoSettings expectedSsfbRepoSettings = ssfbRepoSettingsBuilder()//
-    .setBranchingModel(TRUE)//
     .setFromProject("fromProject")//
     .setFromRepo("fromRepo")//
-    .setRepositoryPermissions(TRUE)//
     .build();
   SsfbRepoSettingsDTO ssfbRepoSettingsDTO = fromSsfbRepoSettings(expectedSsfbRepoSettings);
 
-  sut.post(projectKey, repoSlug, ssfbRepoSettingsDTO);
+  this.sut.post(this.projectKey, this.repoSlug, ssfbRepoSettingsDTO);
 
-  verify(settingsService)//
-    .setSsfbSettings(projectKeyCaptor.capture(), repoSlugCaptor.capture(), ssfbRepoSettingsCaptor.capture());
+  verify(this.settingsService)//
+    .setSsfbSettings(this.projectKeyCaptor.capture(), this.repoSlugCaptor.capture(),
+      this.ssfbRepoSettingsCaptor.capture());
 
-  assertThat(projectKeyCaptor.getValue())//
+  assertThat(this.projectKeyCaptor.getValue())//
     .isEqualTo("projectKey");
-  assertThat(repoSlugCaptor.getValue())//
+  assertThat(this.repoSlugCaptor.getValue())//
     .isEqualTo("repoSlug");
-  assertThat(ssfbRepoSettingsCaptor.getValue())//
-    .isEqualTo(expectedSsfbRepoSettings);
- }
-
- @Test
- public void testThatSettingsCanBeStored() throws Exception {
-  SsfbRepoSettings expectedSsfbRepoSettings = ssfbRepoSettingsBuilder()//
-    .setBranchingModel(TRUE)//
-    .setBranchPermissions(TRUE)//
-    .setFromProject("fromProject")//
-    .setFromRepo("fromRepo")//
-    .setPullRequestSettings(TRUE)//
-    .setRepositoryDetails(TRUE)//
-    .setRepositoryHooks(TRUE)//
-    .setRepositoryPermissions(TRUE)//
-    .build();
-  SsfbRepoSettingsDTO ssfbRepoSettingsDTO = fromSsfbRepoSettings(expectedSsfbRepoSettings);
-
-  sut.post(projectKey, repoSlug, ssfbRepoSettingsDTO);
-
-  verify(settingsService)//
-    .setSsfbSettings(projectKeyCaptor.capture(), repoSlugCaptor.capture(), ssfbRepoSettingsCaptor.capture());
-
-  assertThat(projectKeyCaptor.getValue())//
-    .isEqualTo("projectKey");
-  assertThat(repoSlugCaptor.getValue())//
-    .isEqualTo("repoSlug");
-  assertThat(ssfbRepoSettingsCaptor.getValue())//
+  assertThat(this.ssfbRepoSettingsCaptor.getValue())//
     .isEqualTo(expectedSsfbRepoSettings);
  }
 
  @Test
  public void testThatSettingsCanBeRead() throws Exception {
   SsfbRepoSettings expectedSsfbRepoSettings = ssfbRepoSettingsBuilder()//
-    .setBranchingModel(TRUE)//
-    .setBranchPermissions(TRUE)//
     .setFromProject("fromProject")//
     .setFromRepo("fromRepo")//
-    .setPullRequestSettings(TRUE)//
-    .setRepositoryDetails(TRUE)//
-    .setRepositoryHooks(TRUE)//
-    .setRepositoryPermissions(TRUE)//
+    .setHookConfigurationKeysToSync(newArrayList("hookkey1", ",hookkey2"))//
     .build();
   SsfbSettings ssfbSettings = ssfbSettingsBuilder()//
     .setRepoSettings("projectKey", "repoSlug", expectedSsfbRepoSettings)//
     .build();
-  when(settingsService.getSsfbSettings())//
+  when(this.settingsService.getSsfbSettings())//
     .thenReturn(ssfbSettings);
 
-  Response actual = sut.get(projectKey, repoSlug);
+  Response actual = this.sut.get(this.projectKey, this.repoSlug);
 
   assertThat(actual.getStatus())//
     .isEqualTo(OK.getStatusCode());
   SsfbRepoSettingsDTO ssfbRepoSettingsDTO = (SsfbRepoSettingsDTO) actual.getEntity();
   assertThat(fromSsfbRepoSettingsDTO(ssfbRepoSettingsDTO))//
+    .isEqualTo(expectedSsfbRepoSettings);
+ }
+
+ @Test
+ public void testThatSettingsCanBeStored() throws Exception {
+  SsfbRepoSettings expectedSsfbRepoSettings = ssfbRepoSettingsBuilder()//
+    .setFromProject("fromProject")//
+    .setFromRepo("fromRepo")//
+    .setHookConfigurationKeysToSync(newArrayList("hookkey1", ",hookkey2"))//
+    .build();
+  SsfbRepoSettingsDTO ssfbRepoSettingsDTO = fromSsfbRepoSettings(expectedSsfbRepoSettings);
+
+  this.sut.post(this.projectKey, this.repoSlug, ssfbRepoSettingsDTO);
+
+  verify(this.settingsService)//
+    .setSsfbSettings(this.projectKeyCaptor.capture(), this.repoSlugCaptor.capture(),
+      this.ssfbRepoSettingsCaptor.capture());
+
+  assertThat(this.projectKeyCaptor.getValue())//
+    .isEqualTo("projectKey");
+  assertThat(this.repoSlugCaptor.getValue())//
+    .isEqualTo("repoSlug");
+  assertThat(this.ssfbRepoSettingsCaptor.getValue())//
     .isEqualTo(expectedSsfbRepoSettings);
  }
 }

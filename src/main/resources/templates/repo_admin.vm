@@ -5,7 +5,13 @@
  <meta name="projectKey" content="$repository.project.key">
  <meta name="repositorySlug" content="$repository.slug">
  <meta name="decorator" content="bitbucket.repository.settings">
- <meta name="activeTab" content="se.bjurr.ssfb.repo.synchronization"> $webResourceManager.requireResource("se.bjurr.ssfb.settings-synchronizer-for-bitbucket:repoadmin") $webResourceManager.requireResource("com.atlassian.auiplugin:aui-select")
+ <meta name="activeTab" content="se.bjurr.ssfb.repo.synchronization">
+ <!-- //-->
+ $webResourceManager.requireResource("se.bjurr.ssfb.settings-synchronizer-for-bitbucket:repoadmin")
+ <!-- //-->
+ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-select")
+ <!-- //-->
+ $webResourceManager.requireResource("com.atlassian.auiplugin:aui-toggle")
 </head>
 
 <body>
@@ -30,47 +36,20 @@
 
   <fieldset class="group">
    <legend>
-    <span>Settings</span>
+    <span>Hooks</span>
    </legend>
-   <!--
-   <div class="checkbox">
-    <input class="checkbox" type="checkbox" name="repositoryDetails" id="repositoryDetails">
-    <label for="repositoryDetails">Repository details</label>
-   </div>
-//-->
 
-   <div class="checkbox">
-    <input class="checkbox" type="checkbox" name="repositoryHooks" id="repositoryHooks">
-    <label for="repositoryHooks">Repository hooks</label>
+   <div class="checkbox hook-checkbox-template">
+    <input class="checkbox" type="checkbox" name="hookConfigurationKeysToSync[]">
+    <label for="hookConfigurationKeysToSync[]"></label>
    </div>
-
-   <!--
-   <div class="checkbox">
-    <input class="checkbox" type="checkbox" name="repositoryPermissions" id="repositoryPermissions">
-    <label for="repositoryPermissions">Repository permissions</label>
+   <div class="field-group" id="hookcheckboxes">
    </div>
-
-   <div class="checkbox">
-    <input class="checkbox" type="checkbox" name="branchPermissions" id="branchPermissions">
-    <label for="branchPermissions">Branch permissions</label>
-   </div>
-
-   <div class="checkbox">
-    <input class="checkbox" type="checkbox" name="pullRequestSettings" id="pullRequestSettings">
-    <label for="pullRequestSettings">Pull request settings</label>
-   </div>
-
-   <div class="checkbox">
-    <input class="checkbox" type="checkbox" name="branchingModel" id="branchingModel">
-    <label for="branchingModel">Branching model</label>
-   </div>
-  </fieldset>
-//-->
 
    <fieldset class="group">
     <div class="aui-buttons">
      <button class="aui-button aui-button-primary">Save</button>
-     <button class="aui-button sync-now">Sync now</button>
+     <button class="aui-button sync-now">Sync now (Save first!)</button>
     </div>
    </fieldset>
 

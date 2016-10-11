@@ -1,10 +1,12 @@
 package se.bjurr.ssfb.service;
 
 import static se.bjurr.ssfb.settings.SsfbSettings.ssfbSettingsBuilder;
-import se.bjurr.ssfb.settings.SsfbRepoSettings;
-import se.bjurr.ssfb.settings.SsfbSettings;
-import se.bjurr.ssfb.settings.SyncEvery;
 
+import com.atlassian.bitbucket.repository.Repository;
+import com.atlassian.bitbucket.repository.RepositoryService;
+import com.atlassian.bitbucket.util.Page;
+import com.atlassian.bitbucket.util.PageRequest;
+import com.atlassian.bitbucket.util.PageRequestImpl;
 import com.atlassian.sal.api.pluginsettings.PluginSettings;
 import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
 import com.atlassian.sal.api.transaction.TransactionCallback;
@@ -12,16 +14,22 @@ import com.atlassian.sal.api.transaction.TransactionTemplate;
 import com.google.common.base.Optional;
 import com.google.gson.Gson;
 
+import se.bjurr.ssfb.settings.SsfbRepoSettings;
+import se.bjurr.ssfb.settings.SsfbSettings;
+
 public class SettingsService {
 
  public static final String STORAGE_KEY = "se.bjurr.ssfb.settings-synchronizer-for-bitbucket";
  private static Gson gson = new Gson();
  private final PluginSettings pluginSettings;
+ private final RepositoryService repositoryService;
  private final TransactionTemplate transactionTemplate;
 
- public SettingsService(PluginSettingsFactory pluginSettingsFactory, TransactionTemplate transactionTemplate) {
+ public SettingsService(PluginSettingsFactory pluginSettingsFactory, TransactionTemplate transactionTemplate,
+   RepositoryService repositoryService) {
   this.pluginSettings = pluginSettingsFactory.createGlobalSettings();
   this.transactionTemplate = transactionTemplate;
+  this.repositoryService = repositoryService;
  }
 
  public SsfbSettings getSsfbSettings() {
@@ -33,16 +41,28 @@ public class SettingsService {
   });
  }
 
- public void setSsfbSettings(String startTime, SyncEvery syncEvery) {
+ public Optional<SsfbRepoSettings> getSsfbSettings(String projectKey, String repoSlug) {
+  return inSynchronizedTransaction(new TransactionCallback<Optional<SsfbRepoSettings>>() {
+   @Override
+   public Optional<SsfbRepoSettings> doInTransaction() {
+    return doGetSsfbSettings()//
+      .findRepoSettings(projectKey, repoSlug);
+   }
+  });
+ }
+
+ public void setSsfbSettings(SsfbRepoSettings ssfbRepoSettings) {
   inSynchronizedTransaction(new TransactionCallback<Void>() {
    @Override
    public Void doInTransaction() {
-    SsfbSettings oldSettings = doGetSsfbSettings();
-    SsfbSettings newSettings = ssfbSettingsBuilder(oldSettings)//
-      .setStartTime(startTime)//
-      .setSyncEvery(syncEvery)//
-      .build();
-    doSetSsfbSettings(newSettings);
+    SsfbSettings ssfbSettings = doGetSsfbSettings();
+    Page<Repository> repositories = SettingsService.this.repositoryService.findAll(inOnePage());
+    for (Repository repository : repositories.getValues()) {
+     String projectKey = repository.getProject().getKey();
+     String repoSlug = repository.getSlug();
+     ssfbSettings.setRepoSettings(projectKey, repoSlug, ssfbRepoSettings);
+    }
+    doSetSsfbSettings(ssfbSettings);
     return null;
    }
   });
@@ -60,22 +80,8 @@ public class SettingsService {
   });
  }
 
- public Optional<SsfbRepoSettings> getSsfbSettings(String projectKey, String repoSlug) {
-  return inSynchronizedTransaction(new TransactionCallback<Optional<SsfbRepoSettings>>() {
-   @Override
-   public Optional<SsfbRepoSettings> doInTransaction() {
-    return doGetSsfbSettings()//
-      .findRepoSettings(projectKey, repoSlug);
-   }
-  });
- }
-
- private synchronized <T> T inSynchronizedTransaction(TransactionCallback<T> transactionCallback) {
-  return transactionTemplate.execute(transactionCallback);
- }
-
  private SsfbSettings doGetSsfbSettings() {
-  Object storedSettings = pluginSettings.get(STORAGE_KEY);
+  Object storedSettings = this.pluginSettings.get(STORAGE_KEY);
   if (storedSettings == null) {
    return ssfbSettingsBuilder().build();
   }
@@ -84,6 +90,14 @@ public class SettingsService {
 
  private void doSetSsfbSettings(SsfbSettings ssfbSettings) {
   String data = gson.toJson(ssfbSettings);
-  pluginSettings.put(STORAGE_KEY, data);
+  this.pluginSettings.put(STORAGE_KEY, data);
+ }
+
+ private PageRequest inOnePage() {
+  return new PageRequestImpl(0, 1000000);
+ }
+
+ private synchronized <T> T inSynchronizedTransaction(TransactionCallback<T> transactionCallback) {
+  return this.transactionTemplate.execute(transactionCallback);
  }
 }
