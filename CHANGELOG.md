@@ -3,20 +3,6 @@
 Changelog of Settings Synchronizer for Bitbucket.
 
 ## Unreleased
-### No issue
-
-**Only formatting files in src with jsbeautifier**
-
-
-[9bc354f122e3503](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/9bc354f122e3503) Tomas Bjerre *2016-05-07 06:21:36*
-
-**doc**
-
-
-[7f00708515f2e13](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/7f00708515f2e13) Tomas Bjerre *2016-04-26 04:18:07*
-
-
-## 1.4
 ### GitHub [#7](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/issues/7) Use transactionTemplate
 
 **Handling settings synchronized #7**
