@@ -2,7 +2,7 @@
 
 Changelog of Settings Synchronizer for Bitbucket.
 
-## Unreleased
+## 1.7
 ### GitHub [#10](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/issues/10) Ability to choose what hook to sync
 
 **Adding possibility to select which hooks to sync #9 #10**
@@ -11,7 +11,7 @@ Changelog of Settings Synchronizer for Bitbucket.
  * Removing dead code. 
  * Allowing admin to pick the hooks that should be synced. 
 
-[d5088b5d5e44221](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/d5088b5d5e44221) Tomas Bjerre *2016-10-14 18:10:02*
+[ab9ef6fee7c858a](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/ab9ef6fee7c858a) Tomas Bjerre *2016-10-14 18:11:01*
 
 
 ### GitHub [#9](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/issues/9) Tried and working in Test but not working in Production
@@ -22,7 +22,7 @@ Changelog of Settings Synchronizer for Bitbucket.
  * Removing dead code. 
  * Allowing admin to pick the hooks that should be synced. 
 
-[d5088b5d5e44221](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/d5088b5d5e44221) Tomas Bjerre *2016-10-14 18:10:02*
+[ab9ef6fee7c858a](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/ab9ef6fee7c858a) Tomas Bjerre *2016-10-14 18:11:01*
 
 
 ## 1.6
