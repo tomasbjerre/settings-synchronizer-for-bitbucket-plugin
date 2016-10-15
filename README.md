@@ -9,10 +9,6 @@ Settings can be made on repository level.
 
 ![Repo Settings](https://raw.githubusercontent.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/master/sandbox/repoadmin.png)
 
-Settings can also be made on a global level.
-
-![Globl Repo Settings](https://raw.githubusercontent.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/master/sandbox/globalrepoadmin.png)
-
 ## Developer instructions
 Prerequisites:
 

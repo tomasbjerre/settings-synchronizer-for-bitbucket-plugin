@@ -5,6 +5,11 @@ Changelog of Settings Synchronizer for Bitbucket.
 ## Unreleased
 ### No issue
 
+**Nicer feedback, autosave on sync at repo level**
+
+
+[7503507ba6448a0](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/7503507ba6448a0) Tomas Bjerre *2016-10-15 05:58:20*
+
 **doc**
 
 
