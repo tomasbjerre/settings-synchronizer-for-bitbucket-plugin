@@ -17,6 +17,7 @@ import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
 import com.google.common.base.Optional;
 
 import se.bjurr.ssfb.settings.SsfbRepoSettings;
+import se.bjurr.ssfb.settings.SsfbSettings;
 
 public class SyncService {
 
@@ -46,9 +47,19 @@ public class SyncService {
  }
 
  public void performSyncOnAllRepos() {
+  SsfbSettings ssfbSettings = this.settingsService.getSsfbSettings();
   Page<Repository> repositories = this.repositoryService.findAll(inOnePage());
-  for (Repository repository : repositories.getValues()) {
-   performSync(repository.getProject().getKey(), repository.getSlug());
+  for (Repository toRepository : repositories.getValues()) {
+   String projectKey = toRepository.getProject().getKey();
+   String repoSlug = toRepository.getSlug();
+   Optional<SsfbRepoSettings> ssfbSettingsOpt = ssfbSettings.findRepoSettings(projectKey, repoSlug);
+   if (hasNoSyncSettings(ssfbSettingsOpt)) {
+    continue;
+   }
+   SsfbRepoSettings ssfbRepoSettings = ssfbSettingsOpt.get();
+   Repository fromRepository = this.repositoryService.getBySlug(ssfbRepoSettings.getFromProject(),
+     ssfbRepoSettings.getFromRepo());
+   syncRepositoryHooks(ssfbRepoSettings.getHookConfigurationKeysToSync(), fromRepository, toRepository);
   }
  }
 

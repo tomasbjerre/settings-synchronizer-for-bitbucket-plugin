@@ -5,6 +5,20 @@ Changelog of Settings Synchronizer for Bitbucket.
 ## Unreleased
 ### No issue
 
+**Faster when syncing all repos**
+
+
+[3e72f31edd94e0a](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/3e72f31edd94e0a) Tomas Bjerre *2016-10-15 13:59:59*
+
+**doc**
+
+
+[34840c210970aac](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/34840c210970aac) Tomas Bjerre *2016-10-15 06:07:46*
+
+
+## 1.8
+### No issue
+
 **Nicer feedback, autosave on sync at repo level**
 
 
