@@ -8,13 +8,13 @@
 <body>
  <h2>Synchronization settings</h2>
  <p>
-  There is also settings on each repo settings page.
+  This is where you batch config/sync all repos. There is also settings on each repo settings page.
  </p>
 
  <form id="globalrepoadmin" class="aui ssfb">
   <fieldset class="group">
    <legend>
-    <span>Batch config all repos</span>
+    <span>From repo</span>
    </legend>
 
    <select class="select" id="fromProject" name="fromProject">
@@ -38,7 +38,7 @@
 
    <fieldset class="group">
     <div class="aui-buttons">
-     <button class="aui-button aui-button-primary">Save</button>
+     <button class="aui-button aui-button-primary ssfb-save">Save</button>
     </div>
     <div class="description">
      Sync-settings in all repos will be reset to these settings.
@@ -54,7 +54,7 @@
    </legend>
 
    <div class="aui-buttons">
-    <button class="aui-button aui-button-primary sync-now">Sync now</button>
+    <button class="aui-button aui-button-primary ssfb-sync-now">Sync now</button>
    </div>
    <div class="description">
     Settings in all repos will be reset to their master repo. You may want to save before you sync, if the repos does not already have sync-settings.

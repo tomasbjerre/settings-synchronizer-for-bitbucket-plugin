@@ -15,13 +15,15 @@ define('plugin/ssfb/repoadmin', [
    common.setupRepoSettingsForm(undefined);
   });
 
-  $("#repoadmin").submit(function(e) {
+  $(".ssfb-save").click(function(e) {
    e.preventDefault();
    common.postForm(repoAdminUrl, '#repoadmin');
   });
 
-  $(".sync-now").click(function(e) {
-   common.syncNow(projectKey, repoSlug);
+  $(".ssfb-sync-now").click(function(e) {
+   common.postForm(repoAdminUrl, '#repoadmin', function() {
+    common.syncNow(projectKey, repoSlug);
+   });
   });
  });
 });

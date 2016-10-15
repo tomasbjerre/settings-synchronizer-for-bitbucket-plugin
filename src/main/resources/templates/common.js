@@ -3,7 +3,7 @@ define('plugin/ssfb/common', [
  'plugin/ssfb/3rdparty'
 ], function($, rdparty) {
 
- function postForm(url, formId) {
+ function postForm(url, formId, whenDone) {
   var data = $(formId).serializeJSON();
   $.ajax({
    url: url,
@@ -18,6 +18,9 @@ define('plugin/ssfb/common', [
      title: 'Saved',
      body: '<p>=)</p>'
     });
+    if (whenDone) {
+     whenDone();
+    }
    },
    error: function(xhr, status, error) {
     AJS.flag({
@@ -112,7 +115,23 @@ define('plugin/ssfb/common', [
    type: "POST",
    contentType: "application/json; charset=utf-8",
    dataType: "json",
-   data: jsonString
+   data: jsonString,
+   success: function(data) {
+    AJS.flag({
+     close: 'auto',
+     type: 'success',
+     title: 'Synced',
+     body: '<p>=)</p>'
+    });
+   },
+   error: function(xhr, status, error) {
+    AJS.flag({
+     close: 'auto',
+     type: 'error',
+     title: 'Not synced',
+     body: '<p>:(</p>'
+    });
+   }
   });
  }
 

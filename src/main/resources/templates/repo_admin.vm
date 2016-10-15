@@ -17,7 +17,7 @@
 <body>
  <h2>Synchronization settings</h2>
  <p>
-  There is also settings on the <a href="javascript:location.href=AJS.contextPath()+'/plugins/servlet/ssfb/globaladminview'">global admin page</a>. Where scheduled sync can be configured.
+  There is also settings on the <a href="javascript:location.href=AJS.contextPath()+'/plugins/servlet/ssfb/globaladminview'">global admin page</a>.
  </p>
 
  <form id="repoadmin" class="aui ssfb">
@@ -48,8 +48,8 @@
 
    <fieldset class="group">
     <div class="aui-buttons">
-     <button class="aui-button aui-button-primary">Save</button>
-     <button class="aui-button sync-now">Sync now (Save first!)</button>
+     <button class="aui-button aui-button-primary ssfb-save">Save</button>
+     <button class="aui-button ssfb-sync-now">Sync now</button>
     </div>
    </fieldset>
 

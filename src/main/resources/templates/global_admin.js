@@ -13,12 +13,12 @@ define('plugin/ssfb/globaladmin', [
    common.postForm(repoAdminUrl, '#repoadmin');
   });
 
-  $(".sync-now").click(function(e) {
+  $(".ssfb-sync-now").click(function(e) {
    e.preventDefault();
    common.syncNow('', '');
   });
 
-  $("#globalrepoadmin").submit(function(e) {
+  $(".ssfb-save").click(function(e) {
    e.preventDefault();
    var repoAdminUrl = AJS.contextPath() + "/rest/ssfb/1.0/repoadmin"; 
    common.postForm(repoAdminUrl, '#globalrepoadmin');

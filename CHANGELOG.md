@@ -2,6 +2,15 @@
 
 Changelog of Settings Synchronizer for Bitbucket.
 
+## Unreleased
+### No issue
+
+**doc**
+
+
+[88121011e7dce05](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/88121011e7dce05) Tomas Bjerre *2016-10-14 18:25:23*
+
+
 ## 1.7
 ### GitHub [#10](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/issues/10) Ability to choose what hook to sync
 
