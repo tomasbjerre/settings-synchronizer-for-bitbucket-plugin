@@ -5,10 +5,19 @@ Changelog of Settings Synchronizer for Bitbucket.
 ## Unreleased
 ### No issue
 
+**Set theme jekyll-theme-slate**
+
+
+[5e69bdc958ecb0b](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/5e69bdc958ecb0b) Tomas Bjerre *2017-01-12 03:05:27*
+
+
+## 1.9
+### No issue
+
 **Faster when syncing all repos**
 
 
-[3e72f31edd94e0a](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/3e72f31edd94e0a) Tomas Bjerre *2016-10-15 13:59:59*
+[4d86467f98342b8](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/4d86467f98342b8) Tomas Bjerre *2016-10-15 14:23:09*
 
 **doc**
 
