@@ -38,7 +38,7 @@
 
    <fieldset class="group">
     <div class="aui-buttons">
-     <button class="aui-button aui-button-primary ssfb-save">Save</button>
+     <button type="button" class="aui-button aui-button-primary ssfb-save">Save</button>
     </div>
     <div class="description">
      Sync-settings in all repos will be reset to these settings.
@@ -54,7 +54,7 @@
    </legend>
 
    <div class="aui-buttons">
-    <button class="aui-button aui-button-primary ssfb-sync-now">Sync now</button>
+    <button type="button" class="aui-button aui-button-primary ssfb-sync-now">Sync now</button>
    </div>
    <div class="description">
     Settings in all repos will be reset to their master repo. You may want to save before you sync, if the repos does not already have sync-settings.
