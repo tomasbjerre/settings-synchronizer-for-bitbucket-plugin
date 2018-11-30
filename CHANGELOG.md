@@ -2,8 +2,13 @@
 
 Changelog of Settings Synchronizer for Bitbucket.
 
-## Unreleased
+## 1.10
 ### No issue
+
+**Updating build script**
+
+
+[e9ab2158f6a9dce](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/e9ab2158f6a9dce) Tomas Bjerre *2018-11-30 18:59:39*
 
 **Prevent reloading of settings page at saving or syncing.**
 
@@ -172,17 +177,5 @@ Changelog of Settings Synchronizer for Bitbucket.
 
 
 [4a28d1900bf114e](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/4a28d1900bf114e) Tomas Bjerre *2016-04-19 18:44:54*
-
-
-## 1.0
-### No issue
-
-**Initial commit**
-
- * Global and repo level config. 
- * Batch config all repos on global level. 
- * Synchronization settings for hooks. 
-
-[35216699cf747ef](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/35216699cf747ef) Tomas Bjerre *2016-04-19 18:36:35*
 
 
