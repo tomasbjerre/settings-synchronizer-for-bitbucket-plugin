@@ -5,6 +5,23 @@ Changelog of Settings Synchronizer for Bitbucket.
 ## Unreleased
 ### No issue
 
+**Prevent reloading of settings page at saving or syncing.**
+
+ * Some browsers like Firefox do not wait for event handler callbacks to 
+ * finish when a navigation event has been propagated. 
+ * This behavior prevents the execution of the settings sync, which 
+ * executes the sync after saving. 
+ * To mitigate this the type of the HTML button elements are set to 
+ * &#39;button&#39; (default: &#39;submit&#39;) which does not propagate a navigation 
+ * event. 
+
+[3b50b608e42c5f0](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/3b50b608e42c5f0) Frederik Boster *2018-11-30 16:22:10*
+
+**Building for 5.0**
+
+
+[ff1e56a298490c6](https://github.com/tomasbjerre/settings-synchronizer-for-bitbucket-plugin/commit/ff1e56a298490c6) Tomas Bjerre *2017-05-14 07:09:28*
+
 **Set theme jekyll-theme-slate**
 
 

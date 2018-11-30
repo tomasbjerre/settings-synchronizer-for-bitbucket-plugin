@@ -131,7 +131,7 @@
    <plugin>
     <groupId>se.bjurr.gitchangelog</groupId>
     <artifactId>git-changelog-maven-plugin</artifactId>
-    <version>1.29</version>
+    <version>${changelog.version}</version>
     <executions>
      <execution>
       <id>GenerateGitChangelog</id>
@@ -231,5 +231,6 @@ Changelog of Settings Synchronizer for Bitbucket.
   <bitbucket.data.version>${bitbucket.version}</bitbucket.data.version>
   <quick.reload.version>2.0.0</quick.reload.version>
   <amps.version>6.3.0</amps.version>
+  <changelog.version>1.54</changelog.version>
  </properties>
 </project>

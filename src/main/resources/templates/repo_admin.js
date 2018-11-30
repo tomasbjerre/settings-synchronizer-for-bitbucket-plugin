@@ -6,7 +6,7 @@ define('plugin/ssfb/repoadmin', [
 ], function($, AJS, pageState, common) {
  var projectKey = pageState.getProject().key;
  var repoSlug = pageState.getRepository().slug;
- var repoAdminUrl = AJS.contextPath() + "/rest/ssfb/1.0/projects/" + projectKey + "/repos/" + repoSlug + "/repoadmin"; 
+ var repoAdminUrl = AJS.contextPath() + "/rest/ssfb/1.0/projects/" + projectKey + "/repos/" + repoSlug + "/repoadmin";
 
  $(document).ready(function() {
   $.getJSON(repoAdminUrl, function(data) {

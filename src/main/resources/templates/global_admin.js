@@ -9,7 +9,7 @@ define('plugin/ssfb/globaladmin', [
 
   $("#repoadmin").submit(function(e) {
    e.preventDefault();
-   var repoAdminUrl = AJS.contextPath() + "/rest/ssfb/1.0/projects/" + projectKey + "/repos/" + repoSlug + "/globaladmin"; 
+   var repoAdminUrl = AJS.contextPath() + "/rest/ssfb/1.0/projects/" + projectKey + "/repos/" + repoSlug + "/globaladmin";
    common.postForm(repoAdminUrl, '#repoadmin');
   });
 
@@ -20,7 +20,7 @@ define('plugin/ssfb/globaladmin', [
 
   $(".ssfb-save").click(function(e) {
    e.preventDefault();
-   var repoAdminUrl = AJS.contextPath() + "/rest/ssfb/1.0/repoadmin"; 
+   var repoAdminUrl = AJS.contextPath() + "/rest/ssfb/1.0/repoadmin";
    common.postForm(repoAdminUrl, '#globalrepoadmin');
   });
  });

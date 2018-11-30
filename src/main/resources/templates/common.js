@@ -46,7 +46,7 @@ define('plugin/ssfb/common', [
  }
 
  function getProjects(whenDone) {
-  var projectsUrl = AJS.contextPath() + "/rest/api/1.0/projects?limit=999999"; 
+  var projectsUrl = AJS.contextPath() + "/rest/api/1.0/projects?limit=999999";
   $.getJSON(projectsUrl, function(data) {
    whenDone(data);
   });
@@ -70,7 +70,7 @@ define('plugin/ssfb/common', [
  }
 
  function getRepos(projectKey, whenDone) {
-  var reposUrl = AJS.contextPath() + "/rest/api/1.0/projects/" + projectKey + "/repos?limit=999999"; 
+  var reposUrl = AJS.contextPath() + "/rest/api/1.0/projects/" + projectKey + "/repos?limit=999999";
   $.getJSON(reposUrl, function(data) {
    whenDone(data);
   });
@@ -104,7 +104,7 @@ define('plugin/ssfb/common', [
  }
 
  function syncNow(projectKey, repoSlug) {
-  var syncUrl = AJS.contextPath() + "/rest/ssfb/1.0/globalsync"; 
+  var syncUrl = AJS.contextPath() + "/rest/ssfb/1.0/globalsync";
   var data = {
    projectKey: projectKey,
    repoSlug: repoSlug
@@ -138,7 +138,7 @@ define('plugin/ssfb/common', [
  function addHookCheckboxes(repoSettings) {
   var projectKey = $('#fromProject').val();
   var repoSlug = $('#fromRepo').val();
-  var hooksUrl = AJS.contextPath() + "/rest/api/1.0/projects/" + projectKey + "/repos/" + repoSlug + "/settings/hooks"; 
+  var hooksUrl = AJS.contextPath() + "/rest/api/1.0/projects/" + projectKey + "/repos/" + repoSlug + "/settings/hooks";
   var $hooksArea = $("#hookcheckboxes");
   $hooksArea.empty();
   $.getJSON(hooksUrl, function(data) {
