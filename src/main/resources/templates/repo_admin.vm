@@ -48,8 +48,8 @@
 
    <fieldset class="group">
     <div class="aui-buttons">
-     <button class="aui-button aui-button-primary ssfb-save">Save</button>
-     <button class="aui-button ssfb-sync-now">Sync now</button>
+     <button type="button" class="aui-button aui-button-primary ssfb-save">Save</button>
+     <button type="button" class="aui-button ssfb-sync-now">Sync now</button>
     </div>
    </fieldset>
 
